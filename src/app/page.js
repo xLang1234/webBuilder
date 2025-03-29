@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { ThemeToggle } from './ThemeRegistry';
 import { 
   AppBar, 
   Toolbar, 
@@ -165,52 +166,57 @@ export default function Home() {
       </Head>
       
       {/* Navigation */}
-      <AppBar position="sticky" color="default" elevation={2}>
-        <Container maxWidth="lg">
-          <Toolbar disableGutters>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}
+
+{/* Navigation */}
+<AppBar position="sticky" color="default" elevation={2}>
+  <Container maxWidth="lg">
+    <Toolbar disableGutters>
+      <Typography
+        variant="h6"
+        component="div"
+        sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}
+      >
+        <WebIcon sx={{ mr: 1 }} />
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          WebCraftPro
+        </motion.span>
+      </Typography>
+      
+      {/* Add ThemeToggle button here */}
+      <ThemeToggle />
+      
+      {isMobile ? (
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="end"
+          onClick={handleDrawerToggle}
+        >
+          <MenuIcon />
+        </IconButton>
+      ) : (
+        <Box sx={{ display: 'flex' }}>
+          {navItems.map((item, index) => (
+            <motion.div
+              key={item}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
             >
-              <WebIcon sx={{ mr: 1 }} />
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                WebCraftPro
-              </motion.span>
-            </Typography>
-            
-            {isMobile ? (
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="end"
-                onClick={handleDrawerToggle}
-              >
-                <MenuIcon />
-              </IconButton>
-            ) : (
-              <Box sx={{ display: 'flex' }}>
-                {navItems.map((item, index) => (
-                  <motion.div
-                    key={item}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Button color="inherit" sx={{ mx: 1 }}>
-                      {item}
-                    </Button>
-                  </motion.div>
-                ))}
-              </Box>
-            )}
-          </Toolbar>
-        </Container>
-      </AppBar>
+              <Button color="inherit" sx={{ mx: 1 }}>
+                {item}
+              </Button>
+            </motion.div>
+          ))}
+        </Box>
+      )}
+    </Toolbar>
+  </Container>
+</AppBar>
       
       <Drawer
         anchor="right"
