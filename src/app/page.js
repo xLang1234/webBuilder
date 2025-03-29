@@ -325,12 +325,13 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
+            style={{ height: '100%' }} // Ensure motion div is full height
           >
             <Paper 
               elevation={theme.palette.mode === 'dark' ? 3 : 2} 
               sx={{ 
                 p: 3, 
-                height: '100%', 
+                height: { xs: 'auto', sm: '280px' }, // Fixed height on all but mobile
                 display: 'flex', 
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -350,17 +351,20 @@ export default function Home() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 p: 2,
+                height: '70px', // Fixed height for icon area
                 borderRadius: '50%',
                 backgroundColor: theme.palette.mode === 'dark' ? 'rgba(157, 132, 255, 0.1)' : 'rgba(106, 70, 199, 0.05)'
               }}>
                 {service.icon}
               </Box>
-              <Typography variant="h6" component="h3" gutterBottom>
+              <Typography variant="h6" component="h3" gutterBottom sx={{ mb: 2, height: '32px' }}>
                 {service.title}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {service.description}
-              </Typography>
+              <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+                <Typography variant="body2" color="text.secondary">
+                  {service.description}
+                </Typography>
+              </Box>
             </Paper>
           </motion.div>
         </Grid>
