@@ -229,7 +229,9 @@ export default function Home() {
       {/* Hero Section */}
       <Box
         sx={{
-          backgroundImage: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          background: theme.palette.mode === 'dark' 
+            ? 'linear-gradient(135deg, #4338ca 0%, #6d28d9 100%)' 
+            : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white',
           py: 12,
           textAlign: 'center',
@@ -296,63 +298,76 @@ export default function Home() {
       </Box>
       
       {/* Services Section */}
-      <Box sx={{ py: 8, bgcolor: '#f5f7fa' }}>
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: 'center', mb: 6 }} className="scroll-animate">
-            <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
-              Services
-            </Typography>
-            <Typography variant="h6" sx={{ color: 'text.secondary', maxWidth: '800px', mx: 'auto' }}>
-              End-to-end web development solutions to help your business thrive online
-            </Typography>
-          </Box>
-          
-          <Grid container spacing={4}>
-            {[
-              { icon: <WebIcon fontSize="large" />, title: 'Web Design', description: 'Custom designs that align with your brand and engage your visitors.' },
-              { icon: <CodeIcon fontSize="large" />, title: 'Web Development', description: 'High-performing websites built with modern technologies like React and Next.js.' },
-              { icon: <DevicesIcon fontSize="large" />, title: 'Responsive Design', description: 'Websites that look and function perfectly on any device or screen size.' },
-              { icon: <SpeedIcon fontSize="large" />, title: 'Performance Optimization', description: 'Fast-loading websites optimized for search engines and conversions.' }
-            ].map((service, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                >
-                  <Paper 
-                    elevation={2} 
-                    sx={{ 
-                      p: 3, 
-                      height: '100%', 
-                      display: 'flex', 
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                      transition: 'transform 0.3s ease-in-out',
-                      '&:hover': {
-                        transform: 'translateY(-8px)',
-                        boxShadow: 6
-                      }
-                    }}
-                  >
-                    <Box sx={{ color: 'primary.main', mb: 2 }}>
-                      {service.icon}
-                    </Box>
-                    <Typography variant="h6" component="h3" gutterBottom>
-                      {service.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {service.description}
-                    </Typography>
-                  </Paper>
-                </motion.div>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Box>
+<Box sx={{ 
+  py: 8, 
+  bgcolor: theme.palette.mode === 'dark' ? 'background.paper' : '#f5f7fa'
+}}>
+  <Container maxWidth="lg">
+    <Box sx={{ textAlign: 'center', mb: 6 }} className="scroll-animate">
+      <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
+        Services
+      </Typography>
+      <Typography variant="h6" sx={{ color: 'text.secondary', maxWidth: '800px', mx: 'auto' }}>
+        End-to-end web development solutions to help your business thrive online
+      </Typography>
+    </Box>
+    
+    <Grid container spacing={4}>
+      {[
+        { icon: <WebIcon fontSize="large" />, title: 'Web Design', description: 'Custom designs that align with your brand and engage your visitors.' },
+        { icon: <CodeIcon fontSize="large" />, title: 'Web Development', description: 'High-performing websites built with modern technologies like React and Next.js.' },
+        { icon: <DevicesIcon fontSize="large" />, title: 'Responsive Design', description: 'Websites that look and function perfectly on any device or screen size.' },
+        { icon: <SpeedIcon fontSize="large" />, title: 'Performance Optimization', description: 'Fast-loading websites optimized for search engines and conversions.' }
+      ].map((service, index) => (
+        <Grid item xs={12} sm={6} md={3} key={index}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1, duration: 0.5 }}
+          >
+            <Paper 
+              elevation={theme.palette.mode === 'dark' ? 3 : 2} 
+              sx={{ 
+                p: 3, 
+                height: '100%', 
+                display: 'flex', 
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                backgroundColor: theme.palette.mode === 'dark' ? 'rgba(45, 45, 45, 0.6)' : 'background.paper',
+                '&:hover': {
+                  transform: 'translateY(-8px)',
+                  boxShadow: theme.palette.mode === 'dark' ? '0 8px 20px rgba(0,0,0,0.3)' : 6
+                }
+              }}
+            >
+              <Box sx={{ 
+                color: 'primary.main', 
+                mb: 2,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                p: 2,
+                borderRadius: '50%',
+                backgroundColor: theme.palette.mode === 'dark' ? 'rgba(157, 132, 255, 0.1)' : 'rgba(106, 70, 199, 0.05)'
+              }}>
+                {service.icon}
+              </Box>
+              <Typography variant="h6" component="h3" gutterBottom>
+                {service.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {service.description}
+              </Typography>
+            </Paper>
+          </motion.div>
+        </Grid>
+      ))}
+    </Grid>
+  </Container>
+</Box>
       
       {/* Portfolio Section */}
       <Box sx={{ py: 8 }}>
@@ -419,68 +434,72 @@ export default function Home() {
       </Box>
       
       {/* Development Process */}
-      <Box sx={{ py: 8, bgcolor: '#f5f7fa' }}>
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: 'center', mb: 6 }} className="scroll-animate">
-            <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
-              My Development Process
-            </Typography>
-            <Typography variant="h6" sx={{ color: 'text.secondary', maxWidth: '800px', mx: 'auto' }}>
-              A structured approach to creating exceptional websites
-            </Typography>
-          </Box>
-          
-          <Grid container spacing={4} alignItems="center">
-            {[
-              { step: 1, title: 'Discovery', description: 'Understanding your business goals, target audience, and requirements.' },
-              { step: 2, title: 'Planning', description: 'Creating wireframes, sitemaps, and project roadmap.' },
-              { step: 3, title: 'Design', description: 'Crafting beautiful UI designs that align with your brand identity.' },
-              { step: 4, title: 'Development', description: 'Building your website using modern technologies and best practices.' },
-              { step: 5, title: 'Testing', description: 'Rigorous quality assurance across devices and browsers.' },
-              { step: 6, title: 'Launch', description: 'Deploying your website and providing training on content management.' }
-            ].map((phase, index) => (
-              <Grid item xs={12} md={4} key={index}>
-                <motion.div
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                >
-                  <Box sx={{ 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    p: 3
-                  }}>
-                    <Box sx={{ 
-                      bgcolor: 'primary.main', 
-                      color: 'white', 
-                      width: 60, 
-                      height: 60, 
-                      borderRadius: '50%', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      mb: 2,
-                      fontSize: '1.5rem',
-                      fontWeight: 'bold'
-                    }}>
-                      {phase.step}
-                    </Box>
-                    <Typography variant="h5" component="h3" gutterBottom>
-                      {phase.title}
-                    </Typography>
-                    <Typography variant="body1" color="text.secondary">
-                      {phase.description}
-                    </Typography>
-                  </Box>
-                </motion.div>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Box>
+<Box sx={{ 
+  py: 8, 
+  bgcolor: theme.palette.mode === 'dark' ? 'background.paper' : '#f5f7fa'
+}}>
+  <Container maxWidth="lg">
+    <Box sx={{ textAlign: 'center', mb: 6 }} className="scroll-animate">
+      <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
+        My Development Process
+      </Typography>
+      <Typography variant="h6" sx={{ color: 'text.secondary', maxWidth: '800px', mx: 'auto' }}>
+        A structured approach to creating exceptional websites
+      </Typography>
+    </Box>
+    
+    <Grid container spacing={4} alignItems="center">
+      {[
+        { step: 1, title: 'Discovery', description: 'Understanding your business goals, target audience, and requirements.' },
+        { step: 2, title: 'Planning', description: 'Creating wireframes, sitemaps, and project roadmap.' },
+        { step: 3, title: 'Design', description: 'Crafting beautiful UI designs that align with your brand identity.' },
+        { step: 4, title: 'Development', description: 'Building your website using modern technologies and best practices.' },
+        { step: 5, title: 'Testing', description: 'Rigorous quality assurance across devices and browsers.' },
+        { step: 6, title: 'Launch', description: 'Deploying your website and providing training on content management.' }
+      ].map((phase, index) => (
+        <Grid item xs={12} md={4} key={index}>
+          <motion.div
+            initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1, duration: 0.5 }}
+          >
+            <Box sx={{ 
+              display: 'flex', 
+              flexDirection: 'column',
+              alignItems: 'center',
+              textAlign: 'center',
+              p: 3
+            }}>
+              <Box sx={{ 
+                bgcolor: 'primary.main', 
+                color: 'white', 
+                width: 60, 
+                height: 60, 
+                borderRadius: '50%', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                mb: 2,
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                boxShadow: theme.palette.mode === 'dark' ? '0 0 20px rgba(157, 132, 255, 0.3)' : '0 0 10px rgba(106, 70, 199, 0.2)'
+              }}>
+                {phase.step}
+              </Box>
+              <Typography variant="h5" component="h3" gutterBottom>
+                {phase.title}
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                {phase.description}
+              </Typography>
+            </Box>
+          </motion.div>
+        </Grid>
+      ))}
+    </Grid>
+  </Container>
+</Box>
       
       {/* Testimonials */}
       <Box sx={{ py: 8 }}>
@@ -529,7 +548,9 @@ export default function Home() {
       {/* Call to Action */}
       <Box sx={{ 
         py: 8, 
-        backgroundImage: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: theme.palette.mode === 'dark' 
+          ? 'linear-gradient(135deg, #4338ca 0%, #6d28d9 100%)' 
+          : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         color: 'white',
         textAlign: 'center'
       }}>
@@ -551,11 +572,12 @@ export default function Home() {
               size="large" 
               sx={{ 
                 bgcolor: 'white', 
-                color: '#764ba2',
+                color: theme.palette.mode === 'dark' ? '#4338ca' : '#764ba2',
                 fontWeight: 'bold',
                 '&:hover': {
                   bgcolor: 'rgba(255, 255, 255, 0.9)',
-                }
+                },
+                mr: 2
               }}
             >
               Contact Me
