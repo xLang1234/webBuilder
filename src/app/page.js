@@ -26,6 +26,16 @@ import Layout from './components/Layout';
 import PageHeader from './components/PageHeader';
 import SectionContainer from './components/SectionContainer';
 
+// Import data
+import { 
+  servicesData, 
+  projectsData, 
+  testimonialsData, 
+  processStepsData,
+  heroData,
+  ctaData
+} from '../data/websiteData';
+
 export default function Home() {
   const theme = useTheme();
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -35,49 +45,16 @@ export default function Home() {
     setShowSnackbar(open);
   };
 
-  // Sample project data
-  const projects = [
-    {
-      title: 'E-Commerce Platform',
-      description: 'A full-stack e-commerce platform with secure payment processing',
-      image: '/api/placeholder/400/300',
-      tech: ['Next.js', 'React', 'Node.js', 'MongoDB']
-    },
-    {
-      title: 'Corporate Website',
-      description: 'Responsive corporate website with custom animations and content management',
-      image: '/api/placeholder/400/300',
-      tech: ['React', 'MUI', 'Framer Motion', 'Strapi CMS']
-    },
-    {
-      title: 'Real Estate Application',
-      description: 'Interactive property listing and search application with map integration',
-      image: '/api/placeholder/400/300',
-      tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Google Maps API']
-    },
-  ];
-  
-  // Sample testimonials
-  const testimonials = [
-    {
-      name: 'Sarah Johnson',
-      company: 'TechStart Inc.',
-      comment: 'Working with this developer was a game-changer for our business. Our new website has increased conversions by 40%!',
-      avatar: '/api/placeholder/60/60'
-    },
-    {
-      name: 'Michael Chen',
-      company: 'Innovative Solutions',
-      comment: 'Exceptional work quality and attention to detail. The website exceeded our expectations in both design and functionality.',
-      avatar: '/api/placeholder/60/60'
-    },
-    {
-      name: 'Emma Roberts',
-      company: 'GreenGrow Startup',
-      comment: 'Not only is the website beautiful, but it loads incredibly fast and works perfectly on all devices. Highly recommended!',
-      avatar: '/api/placeholder/60/60'
-    },
-  ];
+  // Map icon names to actual components
+  const getIconComponent = (iconName) => {
+    switch(iconName) {
+      case 'WebIcon': return <WebIcon fontSize="large" />;
+      case 'CodeIcon': return <CodeIcon fontSize="large" />;
+      case 'DevicesIcon': return <DevicesIcon fontSize="large" />;
+      case 'SpeedIcon': return <SpeedIcon fontSize="large" />;
+      default: return null;
+    }
+  };
 
   return (
     <Layout 
@@ -89,8 +66,8 @@ export default function Home() {
     >
       {/* Hero Section - Using PageHeader */}
       <PageHeader 
-        title="Crafting Digital Experiences"
-        subtitle="I build fast, responsive, and beautiful websites that help businesses grow. Using modern technologies for outstanding digital experiences."
+        title={heroData.title}
+        subtitle={heroData.subtitle}
       />
       
       {/* Hero CTA Buttons */}
@@ -148,12 +125,7 @@ export default function Home() {
         id="services"
       >
         <Grid container spacing={4}>
-          {[
-            { icon: <WebIcon fontSize="large" />, title: 'Web Design', description: 'Custom designs that align with your brand and engage your visitors.' },
-            { icon: <CodeIcon fontSize="large" />, title: 'Web Development', description: 'High-performing websites built with modern technologies like React and Next.js.' },
-            { icon: <DevicesIcon fontSize="large" />, title: 'Responsive Design', description: 'Websites that look and function perfectly on any device or screen size.' },
-            { icon: <SpeedIcon fontSize="large" />, title: 'Performance Optimization', description: 'Fast-loading websites optimized for search engines and conversions.' }
-          ].map((service, index) => (
+          {servicesData.map((service, index) => (
             <Grid item xs={12} sm={6} md={3} key={index}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -190,7 +162,7 @@ export default function Home() {
                     borderRadius: '50%',
                     backgroundColor: theme.palette.mode === 'dark' ? 'rgba(157, 132, 255, 0.1)' : 'rgba(106, 70, 199, 0.05)'
                   }}>
-                    {service.icon}
+                    {getIconComponent(service.icon)}
                   </Box>
                   <Typography variant="h6" component="h3" gutterBottom sx={{ mb: 2, height: '32px' }}>
                     {service.title}
@@ -214,7 +186,7 @@ export default function Home() {
         id="portfolio"
       >
         <Grid container spacing={4}>
-          {projects.map((project, index) => (
+          {projectsData.map((project, index) => (
             <Grid item xs={12} md={4} key={index}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -272,14 +244,7 @@ export default function Home() {
         id="process"
       >
         <Grid container spacing={4} alignItems="center">
-          {[
-            { step: 1, title: 'Discovery', description: 'Understanding your business goals, target audience, and requirements.' },
-            { step: 2, title: 'Planning', description: 'Creating wireframes, sitemaps, and project roadmap.' },
-            { step: 3, title: 'Design', description: 'Crafting beautiful UI designs that align with your brand identity.' },
-            { step: 4, title: 'Development', description: 'Building your website using modern technologies and best practices.' },
-            { step: 5, title: 'Testing', description: 'Rigorous quality assurance across devices and browsers.' },
-            { step: 6, title: 'Launch', description: 'Deploying your website and providing training on content management.' }
-          ].map((phase, index) => (
+          {processStepsData.map((phase, index) => (
             <Grid item xs={12} md={4} key={index}>
               <motion.div
                 initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
@@ -330,7 +295,7 @@ export default function Home() {
         id="testimonials"
       >
         <Grid container spacing={4}>
-          {testimonials.map((testimonial, index) => (
+          {testimonialsData.map((testimonial, index) => (
             <Grid item xs={12} md={4} key={index}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -377,10 +342,10 @@ export default function Home() {
             transition={{ duration: 0.5 }}
           >
             <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
-              Ready to Start Your Project?
+              {ctaData.title}
             </Typography>
             <Typography variant="h6" sx={{ mb: 4, maxWidth: '800px', mx: 'auto' }}>
-              Let&apos;s work together to bring your vision to life. Get in touch for a free consultation.
+              {ctaData.subtitle}
             </Typography>
             <Link href="/contact" passHref>
               <Button 
