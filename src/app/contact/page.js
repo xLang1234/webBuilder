@@ -82,29 +82,52 @@ export default function Contact() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  if (validateForm()) {
+    // Show loading state
+    setFormSubmitted(true);
     
-    if (validateForm()) {
-      // Simulate form submission
-      console.log('Form data:', formData);
+    try {
+      // Send form data to API route
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
       
-      // Show success message
-      setSnackbarOpen(true);
-      setFormSubmitted(true);
+      const data = await response.json();
       
-      // Reset form after 1 second
-      setTimeout(() => {
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
-        });
+      if (data.success) {
+        // Show success message
+        setSnackbarOpen(true);
+        
+        // Reset form after success
+        setTimeout(() => {
+          setFormData({
+            name: '',
+            email: '',
+            subject: '',
+            message: ''
+          });
+          setFormSubmitted(false);
+        }, 1000);
+      } else {
+        // Handle error
+        console.error('Form submission error:', data.message);
+        alert('There was an error sending your message. Please try again or contact us directly via email.');
         setFormSubmitted(false);
-      }, 1000);
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      alert('There was an error sending your message. Please try again or contact us directly via email.');
+      setFormSubmitted(false);
     }
-  };
+  }
+};
   
   // Handle direct email option
   const handleEmailClick = () => {
